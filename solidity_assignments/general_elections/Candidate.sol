@@ -3,6 +3,8 @@ pragma solidity ^0.7.0;
 contract Candidate {
     
     address payable ECAuthority;
+    uint[] candidate_ids;
+    address contractAddress;
     
     struct candidateDetail{
         string name;
@@ -12,16 +14,9 @@ contract Candidate {
         uint voteCount;
     }
     
-    struct ballot{
-        uint voter_Id;
-        string candidateId;
-        
-    }
-    
-    
     constructor() payable{
         ECAuthority  = msg.sender;
-        // ballot memory blt = ballot({});
+        contractAddress = address(this);
     }
     
     modifier onlyElectionCommission() {
@@ -37,7 +32,9 @@ contract Candidate {
         require(adhaar_id.length == 12, "Adhaar Id is not 12 digits");
         require(!isCandidateRegistered(_candId), "Candidate is already registered");
         candidateDetail memory cd = candidateDetail({name:_name , electionparty:_elec_party, candidateId:_candId, adhaarId:_adhaarId, voteCount:0  });
+        
         candidateMapProfile[_candId] = cd;
+        candidate_ids.push(_candId);
     }
     
     function getCandidateDetails(uint _candidateId) public view returns (string memory, string memory, uint, string memory) {
@@ -58,13 +55,24 @@ contract Candidate {
         
     }
     
-    function register_vote(uint _candidate_id, uint _voter_id) public{
+    function register_vote(uint _candidate_id) public{
         candidateMapProfile[_candidate_id].voteCount+=1;
     }
     
     function getVoteCountForCandidate(uint _candidate_id) public view onlyElectionCommission returns (uint){
         return candidateMapProfile[_candidate_id].voteCount;
     }
+    
+    function getWinner() public view onlyElectionCommission returns (string memory, uint) {
+        uint winner_id = candidateMapProfile[candidate_ids[0]].voteCount;
+        for (uint candidate_idx=0; candidate_idx<(candidate_ids.length-1); candidate_idx++){
+            if (candidateMapProfile[candidate_ids[candidate_idx]].voteCount<candidateMapProfile[candidate_ids[candidate_idx+1]].voteCount){
+                winner_id = candidate_ids[candidate_idx+1];
+            }
+        }
+        return (candidateMapProfile[winner_id].name, candidateMapProfile[winner_id].voteCount);
+    }
+    
     
     
 }
