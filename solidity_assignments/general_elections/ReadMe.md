@@ -21,6 +21,6 @@ There are 2 files, one for `Candidate.sol` who is standing in election and other
 7. Now with all voters cast Votes using castVote method to respective candidate ids
 8. Now with Account1 click `getWinner`
 
-# Result - 
+## Result - 
 
 It will show the `candidate Name` and `votecount` who is winner in the Elections.
