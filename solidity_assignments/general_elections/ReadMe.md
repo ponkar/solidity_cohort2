@@ -1,4 +1,4 @@
-# Solidity code for Sample Elections
+# Solidity code for General Elections - Assignment 1
 
 ## Summary
 
