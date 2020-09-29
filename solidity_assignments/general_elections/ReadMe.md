@@ -1,14 +1,16 @@
 # Solidity code for Sample Elections
 
-## Summary - 
+## Summary
 
 There are 2 files, one for Candidate who is standing in election and other file for Voter
 
-## Capabilities covered in the code - 
+## Capabilities covered in the code
+
 1. Candidate -> Register New Candidate, Remove Candidate,Get Candidate Details, Get VoteCount of Candidate, IsCandidateRegistered
 2. Voter -> Register New Voter, Cast Vote, IsVoterRegistered
 
-## Steps ->
+## Steps -
+
 1. Deploy Candidate Contract with Account (A1)
 2. Add 2 or more Candidates with registerNewCandidate function
 3. Verify duplicate Candidate Id entries are not allowed
