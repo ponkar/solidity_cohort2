@@ -1,10 +1,9 @@
 pragma solidity ^0.7.0;
 
-import "browser/tests/artifacts/General_Elections/Candidate.sol";
+import "./Candidate.sol";
 
 contract Voter {
     Candidate c1 = Candidate(0xd9145CCE52D386f254917e481eB44e9943F39138);
-    
     address voteraccess;
     
     struct voterDetail{
