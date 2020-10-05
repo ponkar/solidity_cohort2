@@ -1,4 +1,4 @@
-pragma solidity ^0.7.0;
+pragma solidity ^0.7.2;
 
 contract Candidate {
     
@@ -16,8 +16,8 @@ contract Candidate {
     
     constructor() payable{
         ECAuthority  = msg.sender;
-        contractAddress = address(this);
     }
+    
     
     modifier onlyElectionCommission() {
         require(ECAuthority == msg.sender,"UnAuthorized account....");
@@ -26,13 +26,16 @@ contract Candidate {
     
     mapping(uint => candidateDetail)  candidateMapProfile;
     
+    function getCandidateAddress() public view returns (address){
+        return address(this);
+    }
     
     function registerNewCandidate(string memory _name, string memory _elec_party, uint _candId, string memory _adhaarId) public onlyElectionCommission{
+
         bytes memory adhaar_id = bytes(_adhaarId);
         require(adhaar_id.length == 12, "Adhaar Id is not 12 digits");
         require(!isCandidateRegistered(_candId), "Candidate is already registered");
         candidateDetail memory cd = candidateDetail({name:_name , electionparty:_elec_party, candidateId:_candId, adhaarId:_adhaarId, voteCount:0  });
-        
         candidateMapProfile[_candId] = cd;
         candidate_ids.push(_candId);
     }
